@@ -5,15 +5,18 @@ namespace app\src;
 class Router
 {
     public Request $request;
+    public Response $response;
     protected array $routes = [];
 
     /**
      * Router constructor.
      * @param Request $request
+     * @param Response $response
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, Response $response)
     {
         $this->request = $request;
+        $this->response = $response;
     }
 
 
@@ -25,11 +28,12 @@ class Router
     public function resolve()
     {
         $path = $this->request->getPath();
-        $method = $this->request->getMethod();
+        $method = $this->request->method();
         $callback = $this->routes[$method][$path] ?? false;
 
         if ($callback === false) {
-            return "Not found";
+            Application::$app->response->setStatusCode(404);
+            return $this->renderOnlyView("errors/_404");
         }
 
         if (is_string($callback)) {
@@ -39,10 +43,10 @@ class Router
         return call_user_func($callback);
     }
 
-    public function renderView(string $view)
+    public function renderView(string $view, $params = []): array|string
     {
         $layout = $this->layoutContent();
-        $viewContent = $this->renderOnlyView($view);
+        $viewContent = $this->renderOnlyView($view, $params);
         return str_replace('{{content}}', $viewContent, $layout);
     }
 
@@ -53,8 +57,11 @@ class Router
         return ob_get_clean();
     }
 
-    protected function renderOnlyView($view)
+    protected function renderOnlyView($view, $params)
     {
+        foreach ($params as $key => $value) {
+            $$key = $value;
+        }
         ob_start();
         include_once Application::$ROOT_DIR . "/views/$view.php";
         return ob_get_clean();

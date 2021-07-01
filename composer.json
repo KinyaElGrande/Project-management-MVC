@@ -1,0 +1,17 @@
+{
+    "name": "mac/elgrande-mvc",
+    "description": "my first mvc project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mumbi Francis Kinyanjui",
+            "email": "kinya.francis.mumbi@gmail.com"
+        }
+    ],
+    "autoload": {
+       "psr-4": {
+           "app\\": "./"
+       }
+    },
+    "require": {}
+}

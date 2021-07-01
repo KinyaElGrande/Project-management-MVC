@@ -19,10 +19,14 @@ class Router
         $this->response = $response;
     }
 
-
     public function get($path, $callback)
     {
         $this->routes['get'][$path] = $callback;
+    }
+
+    public function post($path, $callback)
+    {
+        $this->routes['post'][$path] = $callback;
     }
 
     public function resolve()
@@ -40,7 +44,12 @@ class Router
             return $this->renderView($callback);
         }
 
-        return call_user_func($callback);
+        if (is_array($callback)){
+            Application::$app->controller = new $callback[0]();
+            $callback[0] = Application::$app->controller;
+        }
+
+        return call_user_func($callback, $this->request);
     }
 
     public function renderView(string $view, $params = []): array|string
@@ -50,10 +59,11 @@ class Router
         return str_replace('{{content}}', $viewContent, $layout);
     }
 
-    protected function layoutContent()
+    protected function layoutContent(): bool|string
     {
+        $layout = Application::$app->controller->layout;
         ob_start();
-        include_once Application::$ROOT_DIR . "/views/layouts/main.php";
+        include_once Application::$ROOT_DIR . "/views/layouts/$layout.php";
         return ob_get_clean();
     }
 

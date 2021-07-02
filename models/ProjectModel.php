@@ -6,9 +6,9 @@ use app\src\Model;
 
 class ProjectModel extends Model
 {
-    public string $name;
-    public string $priority;
-    public string $department;
+    public string $name = '';
+    public string $priority = '';
+    public string $department = '';
 
     public function register()
     {

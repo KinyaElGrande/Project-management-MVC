@@ -1,9 +1,6 @@
-<form action="/project-create" method="post">
-    <label>Name:</label><br>
-    <input type="text" name="name"><br>
-    <label>priority:</label><br>
-    <input type="text" name="priority"><br><br>
-    <label>Department:</label><br>
-    <input type="text" name="department"><br>
+<?php $form = \app\src\form\Form::begin('', "post") ?>
+    <?php echo $form->field($model, 'name') ?>
+    <?php echo $form->field($model, 'priority') ?>
+    <?php echo $form->field($model, 'department') ?>
     <input type="submit" value="Submit">
-</form>
+<?php \app\src\form\Form::close() ?>

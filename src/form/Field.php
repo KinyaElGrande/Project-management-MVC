@@ -31,15 +31,16 @@ class Field
                 <label for="%s" class="block text-sm font-medium text-gray-700">%s</label>
                 <input type="%s" name="%s" id="%s" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
         ',
-            $this->model->{$this->attribute},
+            $this->attribute,
             $this->attribute,
             $this->inputType,
-            $this->model->{$this->attribute},
-            $this->model->{$this->attribute}
+            $this->attribute,
+            $this->attribute
         );
     }
 
-    public function passwordField(){
+    public function passwordField()
+    {
         $this->inputType = self::TYPE_PASSWORD;
         return $this;
     }

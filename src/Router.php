@@ -67,7 +67,7 @@ class Router
         return ob_get_clean();
     }
 
-    protected function renderOnlyView($view, $params)
+    protected function renderOnlyView($view, $params): bool|string
     {
         foreach ($params as $key => $value) {
             $$key = $value;

@@ -5,11 +5,11 @@ namespace app\src;
 class Application
 {
     public static string $ROOT_DIR;
+    public static Application $app;
     public Router $router;
     public Request $request;
     public Response $response;
     public Database $database;
-    public static Application $app;
     public Controller $controller;
 
     /**

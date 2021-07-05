@@ -2,17 +2,22 @@
 
 namespace app\models;
 
-use app\src\Model;
+use app\src\DbModel;
 
-class ProjectModel extends Model
+class Project extends DbModel
 {
     public string $name = '';
     public string $priority = '';
     public string $department = '';
 
-    public function register()
+    public  function  tableName(): string
     {
-        echo "Creating new Project";
+        return 'projects';
+    }
+
+    public function save(): bool
+    {
+        return parent::saveToDB();
     }
 
     public function rules()
@@ -21,5 +26,10 @@ class ProjectModel extends Model
             'name' => [self::RULE_REQUIRED],
             'priority' => [self::RULE_REQUIRED],
         ];
+    }
+
+    public function attributes(): array
+    {
+        return ['name', 'priority', 'department'];
     }
 }

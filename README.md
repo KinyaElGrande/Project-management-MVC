@@ -1,2 +1,1 @@
-## Dummy PHP MVC
-_update coming soon_
+## PHP Project-management MVC Application
